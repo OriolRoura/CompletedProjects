@@ -1,0 +1,13 @@
+##########################################
+FRONTEND SET-UP
+##########################################
+En aquesta secció explicarem quins passos s'han de seguir per muntar l'enviroment per programar el frontend.
+
+1.-Baixar el repositori
+2.-Mitjançant el terminal de l'IDE entrar a la carpeta de frontend
+3.-Executar la comanda
+    npm install
+4.-Executar la comanda:
+	npm start
+5.-Ara se t'hauria d'haver obert una pestanya al navegador en el qual veuràs l'aplicació. Cada vegada que guardis els fitxers se't actualitzarà la visualització en el navegador
+

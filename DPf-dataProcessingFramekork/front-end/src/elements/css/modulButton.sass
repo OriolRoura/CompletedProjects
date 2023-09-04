@@ -1,0 +1,45 @@
+@use 'colorPalette'
+
+$shadow: 6px 6px 12px colorPalette.$darkDarken
+$insetTertiary: inset 6px 6px 12px colorPalette.$tertiaryDarken    
+$insetSecondary: inset 6px 6px 12px colorPalette.$secondaryDarken    
+
+.rightNav button 
+    padding: 10px 15px
+    border: unset
+    border-radius: 15px
+    color: colorPalette.$bright
+    z-index: 1
+    background: colorPalette.$dark
+    position: relative
+    font-weight: 1000
+    font-size: 17px
+    box-shadow: $shadow
+    transition: all 250ms
+    overflow: hidden
+   
+   
+.rightNav button::before 
+    content: ""
+    position: absolute
+    top: 0
+    left: 0
+    height: 100%
+    width: 0
+    border-radius: 15px
+    background-color: colorPalette.$bright
+    z-index: -1
+    box-shadow: $shadow
+    transition: all 250ms
+
+    
+.rightNav button:hover::before 
+    width: 100%
+    background-color: colorPalette.$secondary
+    box-shadow: $insetSecondary
+
+
+.rightNav  button:active::before
+    background-color: colorPalette.$tertiary
+    box-shadow: $insetTertiary
+   

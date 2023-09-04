@@ -1,0 +1,13 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "Server",
+      "Group": "Servers",
+      "Port": 5432,
+      "Username": "webapp",
+      "MaintenanceDB": "WebAppDB",
+      "Host": "Database",
+      "SSLMode": "prefer"
+    }
+  }
+}

@@ -1,0 +1,96 @@
+version: "3.8"
+
+services:
+  DatabaseManagement:
+    container_name: DatabaseManagement
+    hostname: DatabaseManagement
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user@domain.com
+      PGADMIN_DEFAULT_PASSWORD: ManagementAdmin1234
+    volumes:
+      - ./servers.json:/pgadmin4/servers.json
+    ports:
+      - 10001:80
+    networks:
+      - ManagementNetwork
+    depends_on:
+      - Database
+
+  Database:
+    container_name: Database
+    hostname: Database
+    image: postgres
+    environment:
+      POSTGRES_DB: WebAppDB
+      POSTGRES_USER: webapp
+      POSTGRES_PASSWORD: securewebapp12345
+    volumes:
+      - ./initialice.sql:/docker-entrypoint-initdb.d/initialice.sql 
+      - ./docker files/database:/var/lib/postgresql/data
+    networks:
+      - ManagementNetwork
+      - BackendNetwork
+
+  WebServer1:
+    container_name: WebServer1
+    hostname: WebServer1
+    image: webserver
+    build:
+      context: ./webserver/app
+      dockerfile: ./Dockerfile
+    networks:
+      - BackendNetwork
+      - FrontendNetwork
+    depends_on:
+      - Database
+
+  WebServer2:
+    container_name: WebServer2
+    hostname: WebServer2
+    image: webserver
+    build:
+      context: ./webserver/app
+      dockerfile: ./Dockerfile
+    networks:
+      - BackendNetwork
+      - FrontendNetwork
+    depends_on:
+      - Database
+
+  WebServer3:
+    container_name: WebServer3
+    hostname: WebServer3
+    image: webserver
+    build:
+      context: ./webserver/app
+      dockerfile: ./Dockerfile
+    networks:
+      - BackendNetwork
+      - FrontendNetwork
+    depends_on:
+      - Database
+
+  LoadBalancer:
+    container_name: LoadBalancer
+    hostname: LoadBalancer
+    image: nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 10000:80
+    networks:
+      - FrontendNetwork
+    depends_on:
+      - Database
+      - WebServer1
+      - WebServer2
+      - WebServer3
+
+networks:
+  ManagementNetwork:
+    driver: bridge
+  BackendNetwork:
+    driver: bridge
+  FrontendNetwork:
+    driver: bridge
